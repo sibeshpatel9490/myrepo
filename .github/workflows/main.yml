@@ -1,1 +1,32 @@
-
+#name of workflow/ job/ action
+name: Job Name
+# when to do
+#Trigger for workflow
+on:
+    #event based trigger
+    push: 
+        branches: 
+        - main
+    pull_request: 
+        branches: 
+        - main
+    # time based trigger
+    schedule:
+        - cron: "*/5 * * * *"
+# what to do
+jobs:
+    run-my-job:
+        runs-on: ubuntu-latest
+        
+        steps:
+            - name: Checkout code
+              #owner/repository@versionname
+              uses: actions/checkout@v2
+            - name: set up python
+              uses: actions/setup-python@v4
+              with:
+                  python-version: '3.9'
+            - name: install dependencies
+              run: pip install pandas
+            - name: Run pandas job
+              run: python app.py
